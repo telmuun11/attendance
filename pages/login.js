@@ -41,17 +41,19 @@ function login() {
 
     if (uid) {
       const docRef = doc(db, `users/${uid}`);
-      let userPermission = await getDoc(docRef);
-      console.log(userPermission);
 
+      let userPermission = await getDoc(docRef);
+      let className =
+        userPermission._document.data.value.mapValue.fields.class.stringValue;
       userPermission =
         userPermission._document.data.value.mapValue.fields.permission
           .stringValue;
+
       console.log(userPermission);
       if (userPermission == 1) {
         router.push("/monitor");
       } else {
-        router.push("/class/11-4");
+        router.push(`/class/${className}`);
       }
     }
   };
