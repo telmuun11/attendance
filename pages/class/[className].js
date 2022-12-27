@@ -18,39 +18,42 @@ function Class() {
   const [isuser, setIsuser] = useState(auth.currentUser);
   const db = getFirestore(app);
   const router = useRouter();
-
+  const className = router.query.className;
   useEffect(() => {
     if (isuser == null) {
       router.push("/login");
     }
   }, [isuser]);
+  let col = collection(db, `/students/4thgen/${className}`);
 
-  if (isuser) {
+  const [data, setData] = useState();
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getDocs(col);
+
+      setData(res);
+    };
+
+    try {
+      getData();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  if (isuser && data) {
     let uid = auth.currentUser.uid;
     // let docRef = doc(db, `users/${uid}`);
-    let className = router.query.className;
+
     // let classNumber = className.split("-")[0];
     // let uy = 15 - classNumber;
-    let col = collection(db, "/users");
     let docref = doc(db, "/students/4thgen");
-  
 
-    const [data, setData] = useState();
-    useEffect(() => {
-      const getData = async () => {
-        const res = await getDocs(col);
+   
 
-        setData(res);
-      };
+    console.log(data._snapshot.docChanges);
+    const List= data._snapshot.docChanges;
 
-      try {
-        getData();
-      } catch (e) {
-        console.log(e);
-      }
-    }, []);
-
-    console.log(data);
     //   import { collection, getDocs } from "firebase/firestore";
 
     // const querySnapshot = await getDocs(collection(db, "cities"));
@@ -59,7 +62,16 @@ function Class() {
     //   console.log(doc.id, " => ", doc.data());
     // });
 
-    return <div>irtsee burtguulyaa {className} </div>;
+    return (
+      <div>
+        <div>irtsee burtguulyaa {className}</div>
+        {
+          List.map((e)=>{
+            return <div>{e.doc.key.path.segments[8]}</div>
+          })
+        }
+      </div>
+    );
   }
 
   return <div> aldaa </div>;
