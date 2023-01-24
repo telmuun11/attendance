@@ -1,5 +1,26 @@
 .cont
 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row
+
+}
+.cont1{
+    display: flex;
+    flex-direction: row;
+ 
+}
+.w100{
+    width: 80px ;
+ 
+    height: 10px;
+}
+.tilt{
+   width: 5   0; 
+}
+.z-1{
+    z-index: 1;
+}
+
+.z-0{
+    z-index: 0;
 }
