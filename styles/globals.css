@@ -1,26 +1,30 @@
-.cont
-{
-    display: flex;
-    flex-direction: row
+.cont {
+  display: flex;
+  flex-direction: row;
+}
+.cont1 {
+  display: flex;
+  flex-direction: row;
+  margin: 30px;
+}
+.w100 {
+  /* width: 20x; */
+  width: 100%;
+  height: 30px;
+  margin-left: 10px;
+  max-width: 400px;
+}
+.w101 {
+  width: 220px;
+  display: flex;
+  align-self: center;
+  height: 10px;
+}
 
-}
-.cont1{
-    display: flex;
-    flex-direction: row;
- 
-}
-.w100{
-    width: 80px ;
- 
-    height: 10px;
-}
-.tilt{
-   width: 5   0; 
-}
-.z-1{
-    z-index: 1;
+.z-1 {
+  z-index: 1;
 }
 
-.z-0{
-    z-index: 0;
+.z-0 {
+  z-index: 0;
 }
