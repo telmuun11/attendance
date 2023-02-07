@@ -4,20 +4,16 @@ import { getAuth } from "firebase/auth";
 import { useState, useEffect } from "react";
 import {
   getFirestore,
-  doc,
   getDocs,
-  getDoc,
   collection,
   query,
   where,
+  writeBatch, 
+  doc
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import firebaseconfig from "../component/firebaseconfig";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Row from "../component/Row";
 
 function Class() {
   const app = initializeApp(firebaseconfig);
@@ -33,9 +29,13 @@ function Class() {
   }, [isuser]);
 
   const [data, setData] = useState();
+
   useEffect(() => {
     const getData = async () => {
-      const q = query(collection(db, "students"), where("class", "==", "12-1"));
+      const q = query(
+        collection(db, "students"),
+        where("class", "==", className)
+      );
 
       const daata = await getDocs(q);
       console.log(daata);
@@ -48,26 +48,57 @@ function Class() {
       console.log(e);
     }
   }, []);
+  
+    
+  let d = [];
+  let c = [];
+
+  for (let i = 0; i < 4; i++) {
+    d.push("kita");
+  }
+  for (let i = 0; i < 4; i++) {
+    c.push("Бүтэн");
+  }
 
 
-  // querySnapshot.forEach((doc) => {
-  //   // doc.data() is never undefined for query doc snapshots
-  //   console.log(doc.id, " => ", doc.data());
-  // });
+  const [irts, setIrts] = useState(d);
+  const [duration, setDuration] = useState(c);
 
   if (isuser && data) {
+    let length = data._snapshot.docChanges.length;
+
+    let List = [];
+    for (let i = 0; i < length; i++) {
+      List.push(data._snapshot.docChanges[i].doc.key.path.segments[6]);
+    }
     let uid = auth.currentUser.uid;
-
-    let List = data._snapshot.docChanges;
-    console.log(List);
-
+    const date= new Date();
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+ 
+    const Submit = async ()=>{
+ 
+      const batch = writeBatch(db);
+ 
+   
+      for(let i=0 ; i<irts.length ; i++){
+        const nycRef = doc(db, `${month}-${day}`, List[i]);
+        batch.set(nycRef, {"attendance": `${irts[i]} ${duration[i]}`});
+      }
+      await batch.commit();
+    }
     return (
       <div>
+
+      <div>
         <div>irtsee burtguulyaa {className}</div>
-      <Row/>
-        {List.map((e) => {
-          return <div>{e.doc.key.path.segments[6]}</div>;
+     
+        {List.map((e, index) => {
+          return Row(e, index, setDuration, setIrts, irts, duration, List);
+      
         })}
+      </div>
+      <button onClick={Submit}>irtsee ugii </button>
       </div>
     );
   }
@@ -76,69 +107,9 @@ function Class() {
 }
 export default Class;
 
-  const [age, setAge] = React.useState([]);
-  // angi angiar avah -> name
+// angi angiar avah -> name
 // udruud shuuh -> doc id == name rec
 // angiin jagsaalt irtsiin -> not nescessery
 // suragch yalgah most-> for all -> not necsessery
 // n.namuun 12-3
 
-const Row = ()=>{
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  return <div className="cont1">
-  M.Telmuun
-  <div className="w100 ">
-  
-    <FormControl fullWidth size="small">
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
-      <Select
-  
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        // value={age}
-        label="Irts"
-        onChange={handleChange}
-        autoWidth={true}
-      >
-        <MenuItem value={"irsen"}>irsen</MenuItem>
-        <MenuItem value={"tas"}>Tas</MenuItem>
-        <MenuItem value={"uivchtei"}>Uvchtei</MenuItem>
-        <MenuItem value={"chuluutei"}>Chuluutei </MenuItem>
-      </Select>
-    </FormControl>
-  
-  </div>
-  <Box className="w100">
-    <FormControl fullWidth size="small" >
-      <InputLabel id="demo-simple-select-label">Irts</InputLabel>
-      <Select
-      
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        // value={age}
-        label="Irts"
-        onChange={handleChange}
-      >
-        <MenuItem value={"bu"}>Buten Udur</MenuItem>
-        <MenuItem value={"1"}>1</MenuItem>
-        <MenuItem value={"2"}>2</MenuItem>
-        <MenuItem value={"3"}>3</MenuItem>
-        <MenuItem value={"4"}>4</MenuItem>
-        <MenuItem value={"5"}>5</MenuItem>
-        <MenuItem value={"6"}>6</MenuItem>
-        <MenuItem value={"7"}>7</MenuItem>
-        <MenuItem value={"8"}>8</MenuItem>
-        <MenuItem value={"9"}>9</MenuItem>
-      </Select>
-    </FormControl>
-  </Box>
-  </div>
-}
-
-// yamarch bsn age ee array bolgood indexee eventeige hamt hiiged eventere arr[i]=event.data 
-// <select tag deer baigaa value d ni utga uguhgui bl bolohgui bnlee tgheer arr[i] geed uguud uznu 
-// owarimashoyou

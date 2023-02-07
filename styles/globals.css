@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: row;
 }
+body{
+  margin: 0;
+}
 .cont1 {
   display: flex;
   flex-direction: row;
@@ -27,4 +30,39 @@
 
 .z-0 {
   z-index: 0;
+}
+.f1{
+  width: 30%;
+  background-color: #0d74f5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.f2{
+  width: 70%;
+  height: 100vh;
+  /* background-color: blueviolet; */
+}
+.row{
+  display: flex;
+  flex-direction: row;
+
+}
+.col{
+  display: flex;
+  flex-direction: column;
+
+}
+.c1{
+  margin-top: 100px;
+}
+.sidec{
+  font-size: xxx-large;
+  color: white;
+  margin: 10px;
+}
+.sidec1{
+  font-size: xxx-large;
+  color: white;
 }

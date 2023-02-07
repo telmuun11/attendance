@@ -5,21 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function SignIn() {
-  let d = [];
-  let c = [];
 
-  for (let i = 0; i < 27; i++) {
-    d.push("kita");
-  }
-  for (let i = 0; i < 27; i++) {
-    c.push("Бүтэн");
-  }
-
-  const [irts, setIrts] = React.useState(d);
-  const [duration, setDuration] = React.useState(c);
-  let List = ["Brooks","Rachel"];
-  const Row = (e, index) => {
+const Row = (e, index , setDuration , setIrts , irts , duration , List) => {
     const handleChange = (event) => {
       let a = irts;
       a[index] = event.target.value;
@@ -92,8 +79,4 @@ export default function SignIn() {
       </div>
     );
   };
-
-  return irts.map((e, index) => {
-    return Row(e, index);
-  });
-}
+  export default Row;
