@@ -66,25 +66,33 @@ export default function darga() {
             .stringValue
         );
       }
-      console.log("aaaa ",angi)
+      console.log("iirts : " ,irts)
       for (let i = 0; i < angi.length; i++) {
+        console.log("index : " , i)
+
         if (irts[i] == "nai") {
           tas = tas + 1;
-          if (angi[i].split("-")[0] == "11") {
-            let kumi = angi[i].split("-")[1];
-            durev[4] = durev[4] + 1;
-            durev[kumi - 1] = durev[kumi - 1] + 1;
-          }
-          if (angi[i].split("-")[0] == "12") {
-            let kumi = angi[i].split("-")[1];
-            gurav[4] = gurav[4] + 1;
-            gurav[kumi - 1] = gurav[kumi - 1] + 1;
-          }
-          if (angi[i].split("-")[0] == "10") {
-            let kumi = angi[i].split("-")[1];
-            tav[4] = tav[4] + 1;
-            tav[kumi - 1] = tav[kumi - 1] + 1;
-          }
+            if (angi[i].split("-")[0] == "11") {
+              let kumi = angi[i].split("-")[1];
+              console.log("rararaa :" ,irts[i])
+              console.log("kumii : " , kumi)
+              durev[4] = durev[4] + 1;
+              durev[kumi - 1] = durev[kumi - 1] + 1;
+            }
+
+            if (angi[i].split("-")[0] == "12") {
+              let kumi = angi[i].split("-")[1];
+              console.log("kumii : " , kumi)
+
+              gurav[4] = gurav[4] + 1;
+              gurav[kumi - 1] = gurav[kumi - 1] + 1;
+            }
+
+            if (angi[i].split("-")[0] == "10") {
+              let kumi = angi[i].split("-")[1];
+              tav[4] = tav[4] + 1;
+              tav[kumi - 1] = tav[kumi - 1] + 1;
+            }
         }
 
         if (irts[i] == "byoki") {
@@ -94,7 +102,8 @@ export default function darga() {
           chuluutei = chuluutei + 1;
         }
       }
-      console.log("4 : " , durev ," 3: " , gurav)
+  
+
       let mu = [];
       if (gurav[4] > tav[4]) {
         if (gurav[4] > durev[4]) {
@@ -172,7 +181,7 @@ export default function darga() {
               return <div className="t3">{`${month}/${day}`}</div>;
             }
 
-            return boox(b[i - 1], data[i - 1]);
+            return boox(b[i - 1], data[i - 1]/2);
           })}
         </div>
         <div className="row">
@@ -180,7 +189,7 @@ export default function darga() {
             if (i == 0) {
               return boox(b[i + 2], data[i + 2]);
             }
-            return boox(b[i + 2], `${data[i + 2][0]}-${data[i + 2][1]}`);
+            return boox(b[i + 2], `${data[i + 2][0]}-${data[i + 2][1]/2}`);
           })}
         </div>
       </div>
