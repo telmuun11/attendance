@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import firebaseconfig from "./component/firebaseconfig";
 import SearchIcon from "@mui/icons-material/Search";
 
-export default function darga() {
+export default function Monitor() {
   const app = initializeApp(firebaseconfig);
   const auth = getAuth(app);
   const [isuser, setIsuser] = useState(auth.currentUser);
@@ -68,32 +68,7 @@ export default function darga() {
       }
       console.log("iirts : " ,irts)
       for (let i = 0; i < angi.length; i++) {
-        console.log("index : " , i)
-
-        if (irts[i] == "nai") {
-          tas = tas + 1;
-            if (angi[i].split("-")[0] == "11") {
-              let kumi = angi[i].split("-")[1];
-              console.log("rararaa :" ,irts[i])
-              console.log("kumii : " , kumi)
-              durev[4] = durev[4] + 1;
-              durev[kumi - 1] = durev[kumi - 1] + 1;
-            }
-
-            if (angi[i].split("-")[0] == "12") {
-              let kumi = angi[i].split("-")[1];
-              console.log("kumii : " , kumi)
-
-              gurav[4] = gurav[4] + 1;
-              gurav[kumi - 1] = gurav[kumi - 1] + 1;
-            }
-
-            if (angi[i].split("-")[0] == "10") {
-              let kumi = angi[i].split("-")[1];
-              tav[4] = tav[4] + 1;
-              tav[kumi - 1] = tav[kumi - 1] + 1;
-            }
-        }
+    
 
         if (irts[i] == "byoki") {
           uvchtei = uvchtei + 1;
@@ -120,20 +95,25 @@ export default function darga() {
         }
       }
       let max = [];
-      max.push(tav.slice(0, 4));
-      max.push(durev.slice(0, 4));
-      max.push(gurav.slice(0, 4));
+      max.push(...tav.slice(0, 4));
+      max.push(...durev.slice(0, 4));
+      max.push(...gurav.slice(0, 4));
       let frm = [0, 0];
+   
       for (let i = 0; i < max.length; i++) {
         if (frm[0] < max[i]) {
           frm[0] = max[i];
           frm[1] = i;
         }
       }
-      console.log("loooool   : ", frm[1]);
-      let tasangi = 10 + (frm[1] - 1) / 4;
-      let taskumi = frm[1] % 4;
-      if (frm[1] % 4 == 0) {
+    
+      let tasangi = 10 + Math.floor(frm[1]/4);
+
+ 
+
+      let taskumi = (frm[1]+1) % 4;
+      console.log(taskumi)
+      if (taskumi == 0) {
         taskumi = 4;
       }
       final = [
@@ -169,7 +149,9 @@ export default function darga() {
             <div className="sidec1">Search</div>
           </div>
           <div className="sidec">III </div>
-          <div className="sidec">IV </div>
+          <div className="sidec" onClick={()=>  router.push(`/gen/${11}`) }>IV </div>
+    
+
           <div className="sidec">V </div>
         </div>
       </div>
@@ -187,9 +169,9 @@ export default function darga() {
         <div className="row">
           {a.map((e, i) => {
             if (i == 0) {
-              return boox(b[i + 2], data[i + 2]);
+              return boox(b[i + 2], data[i + 2]/2);
             }
-            return boox(b[i + 2], `${data[i + 2][0]}-${data[i + 2][1]/2}`);
+            return boox(b[i + 2], `${data[i + 2][0]} : ${data[i + 2][1]/2}`);
           })}
         </div>
       </div>
