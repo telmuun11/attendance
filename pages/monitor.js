@@ -10,7 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import firebaseconfig from "./component/firebaseconfig";
+import firebaseconfig from "../src/component/firebaseconfig";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function Monitor() {
@@ -29,12 +29,12 @@ export default function Monitor() {
   let durev = [0, 0, 0, 0, 0];
   let tav = [0, 0, 0, 0, 0];
 
-  const b = ["tasalsan ", "uvchtei", "chuluutei", "tas ih uy", "tas ih angi"];
+  const b = ["тасалсан", "өвчтэй", "чөлөөтэй", "тас их үе", "тас их анги"];
 
   const boox = (title, numbaa) => {
     return (
       <div className="box">
-        <div className="t1"> {title}</div>
+        <div className="t4">{title}</div>
         <div className="t2">{numbaa}</div>
       </div>
     );
@@ -55,8 +55,9 @@ export default function Monitor() {
       let irts = [];
       for (let i = 0; i < daata._snapshot.docChanges.length; i++) {
         irts.push(
-          daata._snapshot.docChanges[i].doc.data.value.mapValue.fields.attendance
-          .stringValue.split(" ")[0]
+          daata._snapshot.docChanges[
+            i
+          ].doc.data.value.mapValue.fields.attendance.stringValue.split(" ")[0]
         );
       }
 
@@ -66,10 +67,8 @@ export default function Monitor() {
             .stringValue
         );
       }
-      console.log("iirts : " ,irts)
+      console.log("iirts : ", irts);
       for (let i = 0; i < angi.length; i++) {
-    
-
         if (irts[i] == "byoki") {
           uvchtei = uvchtei + 1;
         }
@@ -77,7 +76,6 @@ export default function Monitor() {
           chuluutei = chuluutei + 1;
         }
       }
-  
 
       let mu = [];
       if (gurav[4] > tav[4]) {
@@ -99,20 +97,18 @@ export default function Monitor() {
       max.push(...durev.slice(0, 4));
       max.push(...gurav.slice(0, 4));
       let frm = [0, 0];
-   
+
       for (let i = 0; i < max.length; i++) {
         if (frm[0] < max[i]) {
           frm[0] = max[i];
           frm[1] = i;
         }
       }
-    
-      let tasangi = 10 + Math.floor(frm[1]/4);
 
- 
+      let tasangi = 10 + Math.floor(frm[1] / 4);
 
-      let taskumi = (frm[1]+1) % 4;
-      console.log(taskumi)
+      let taskumi = (frm[1] + 1) % 4;
+      console.log(taskumi);
       if (taskumi == 0) {
         taskumi = 4;
       }
@@ -140,19 +136,21 @@ export default function Monitor() {
   }, [isuser]);
 
   return (
-    <div className="row">
-      <div className="f1">
-        <div className="head">Attendance</div>
-        <div className="col c1">
-          <div className="row sidec">
-            <SearchIcon className="sidec1" />
-            <div className="sidec1">Search</div>
+    <div className="cont row">
+      <div className="f1 center">
+        <div className="menu">
+          <div className="head">Attendance</div>
+          <div className="col c1">
+            <div className="row sidec">
+              <SearchIcon className="sidec1" />
+              <div className="sidec1">Search</div>
+            </div>
+            <div className="sidec">III</div>
+            <div className="sidec" onClick={() => router.push(`/gen/${11}`)}>
+              IV
+            </div>
+            <div className="sidec">V</div>
           </div>
-          <div className="sidec">III </div>
-          <div className="sidec" onClick={()=>  router.push(`/gen/${11}`) }>IV </div>
-    
-
-          <div className="sidec">V </div>
         </div>
       </div>
       <div className="f2">
@@ -160,18 +158,18 @@ export default function Monitor() {
           {/* const b = ["tasalsan ", "uvchtei", "chuluutei", "tas ih uy", "tas ih angi"]; */}
           {a.map((e, i) => {
             if (i == 0) {
-              return <div className="t3">{`${month}/${day}`}</div>;
+              return <div className="t3 center">{`${month}/${day}`}</div>;
             }
 
-            return boox(b[i - 1], data[i - 1]/2);
+            return boox(b[i - 1], data[i - 1] / 2);
           })}
         </div>
         <div className="row">
           {a.map((e, i) => {
             if (i == 0) {
-              return boox(b[i + 2], data[i + 2]/2);
+              return boox(b[i + 2], data[i + 2] / 2);
             }
-            return boox(b[i + 2], `${data[i + 2][0]} : ${data[i + 2][1]/2}`);
+            return boox(b[i + 2], `${data[i + 2][0]} : ${data[i + 2][1] / 2}`);
           })}
         </div>
       </div>

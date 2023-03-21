@@ -12,8 +12,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import firebaseconfig from "../component/firebaseconfig";
-import Row from "../component/Row";
+import firebaseconfig from "../../src/component/firebaseConfig";
 
 function Generetion() {
   const app = initializeApp(firebaseconfig);
@@ -27,7 +26,7 @@ function Generetion() {
   const db = getFirestore(app);
   const router = useRouter();
   const genName = router.query.genName;
-  const slot = ["tasalsan ", "uvchtei", "chuluutei"];
+  const slot = ["тасалсан", "өвчтэй", "чөлөөтэй"];
 
   let tas = [0, 0, 0, 0, 0];
   let uvchtei = [0, 0, 0, 0, 0];
@@ -108,9 +107,9 @@ function Generetion() {
           {" "}
           {genName}-{index + 1}
         </div>
-        <div className="t2">tas :{data[0][index]}</div>
-        <div className="t2">uvchtei :{data[1][index]}</div>
-        <div className="t2">chuluutei :{data[2][index]}</div>
+        <div className="t2">тасалсан: {data[0][index]}</div>
+        <div className="t2">өвчтэй: {data[1][index]}</div>
+        <div className="t2">чөлөөтэй: {data[2][index]}</div>
       </div>
     );
   };
@@ -124,20 +123,19 @@ function Generetion() {
   };
 
   return (
-    <div className="col">
-    
-
+    <div className="cont center">
+      <div className="col">
         <div className="row ccont">
-        <div className="title">{genName}</div>
+          <div className="title">{genName}</div>
           {dummy2.map((e, index) => {
             return circle(index);
           })}
-      
-      </div>
-      <div className="row even">
-        {dummy.map((e, index) => {
-          return boox(index);
-        })}
+        </div>
+        <div className="row even">
+          {dummy.map((e, index) => {
+            return boox(index);
+          })}
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,13 @@
+.cont {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+.imag {
+  width: 150px;
+  display: flex;
+}
+.mar {
+  margin: 10px;
+}

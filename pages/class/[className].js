@@ -8,12 +8,13 @@ import {
   collection,
   query,
   where,
-  writeBatch, 
-  doc
+  writeBatch,
+  doc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import firebaseconfig from "../component/firebaseconfig";
-import Row from "../component/Row";
+import firebaseconfig from "../../src/component/firebaseConfig";
+import Row from "../../src/component/Row";
+import { Button } from "@mui/material";
 
 function Class() {
   const app = initializeApp(firebaseconfig);
@@ -48,8 +49,7 @@ function Class() {
       console.log(e);
     }
   }, []);
-  
-    
+
   let d = [];
   let c = [];
 
@@ -59,7 +59,6 @@ function Class() {
   for (let i = 0; i < 4; i++) {
     c.push("Бүтэн");
   }
-
 
   const [irts, setIrts] = useState(d);
   const [duration, setDuration] = useState(c);
@@ -72,33 +71,34 @@ function Class() {
       List.push(data._snapshot.docChanges[i].doc.key.path.segments[6]);
     }
     let uid = auth.currentUser.uid;
-    const date= new Date();
-    let day = date.getDate()
-    let month = date.getMonth() + 1
- 
-    const Submit = async ()=>{
- 
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+
+    const Submit = async () => {
       const batch = writeBatch(db);
- 
-   
-      for(let i=0 ; i<irts.length ; i++){
+
+      for (let i = 0; i < irts.length; i++) {
         const nycRef = doc(db, `${month}-${day}`, List[i]);
-        batch.set(nycRef, {"attendance": `${irts[i]} ${duration[i]}`});
+        batch.set(nycRef, { attendance: `${irts[i]} ${duration[i]}` });
       }
       await batch.commit();
-    }
+    };
     return (
-      <div>
-
-      <div>
-        <div>irtsee burtguulyaa {className}</div>
-     
-        {List.map((e, index) => {
-          return Row(e, index, setDuration, setIrts, irts, duration, List);
-      
-        })}
-      </div>
-      <button onClick={Submit}>irtsee ugii </button>
+      <div className="container">
+        <div>
+          <div style={{ fontSize: "32px" }} className="class-name">
+            Анги: {className}
+          </div>
+          {List.map((e, index) => {
+            return Row(e, index, setDuration, setIrts, irts, duration, List);
+          })}
+        </div>
+        <div style={{ width: "100%" }} className="center">
+          <Button style={{ width: "90%" }} onClick={Submit} variant="contained">
+            Ирц Бүртгүүлэх
+          </Button>
+        </div>
       </div>
     );
   }
@@ -112,4 +112,3 @@ export default Class;
 // angiin jagsaalt irtsiin -> not nescessery
 // suragch yalgah most-> for all -> not necsessery
 // n.namuun 12-3
-

@@ -12,7 +12,7 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
-import firebaseConfig from "./component/firebaseconfig";
+import firebaseConfig from "../src/component/firebaseConfig";
 import { useRouter } from "next/router";
 
 function login() {
@@ -53,42 +53,39 @@ function login() {
         router.push("/monitor");
       } else {
         let className =
-        userPermission._document.data.value.mapValue.fields.class.stringValue;
+          userPermission._document.data.value.mapValue.fields.class.stringValue;
         router.push(`/class/${className}`);
       }
     }
   };
 
   return (
-    <div className="cont">
-      <img
-        className="imag"
-        src="https://scontent.fuln6-2.fna.fbcdn.net/v/t1.6435-9/139499556_908073433066078_8849535996146205179_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=UdPFEDE7O-QAX_OtOTf&_nc_ht=scontent.fuln6-2.fna&oh=00_AfBWcYNdjjF79ujj5finARKUnWjsdyETPnPb-frAY2pP8w&oe=63AA6CAE"
-        alt=""
-      />
-      <div className="head">nevtreh</div>
-      <TextField
-        value={gmail}
-        onChange={(e) => setGmail(e.target.value)}
-        className="mar"
-        id="outlined-basic"
-        label="Gmail"
-        variant="outlined"
-      />
-      <TextField
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-        className="mar"
-        id="outlined-basic"
-        label="Password"
-        variant="outlined"
-      />
-      <Button onClick={a} variant="contained">
-        Sign in
-      </Button>
-      <div></div>
+    <div className="cont center">
+      <div className="login-background">
+        <div className="login-title">Нэвтрэх</div>
+        <TextField
+          value={gmail}
+          onChange={(e) => setGmail(e.target.value)}
+          className="mar"
+          id="outlined-basic"
+          label="Gmail"
+          variant="outlined"
+        />
+        <TextField
+          value={password}
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          className="mar"
+          id="outlined-basic"
+          label="Password"
+          variant="outlined"
+        />
+        <Button onClick={a} variant="contained">
+          Sign in
+        </Button>
+      </div>
     </div>
   );
 }
